@@ -1,58 +1,55 @@
-🎶 Ambiently
+# 🎶 Ambiently
 
-A lightweight ambient sound engine for Next.js apps.
-Play looping background sounds (lo-fi, rain, fireplace, etc.) with fade-in/out and volume control.
+A lightweight ambient sound engine for **Next.js apps**.  
+Play looping background sounds (lo-fi, rain, fireplace, etc.) with fade-in/out and volume control.  
 
-Built with Next.js, ships with an embeddable Ambiently Engine core, and a demo app.
+Built with Next.js, ships with an **embeddable Ambiently Engine core** + a demo app.
 
-✨ Features
+---
 
-🎵 Multiple background audio layers (rain, lofi, fireplace, etc.)
+## ✨ Features
 
-🔄 Seamless looping & volume control
+- 🎵 Multiple background audio layers (rain, lofi, fireplace, etc.)
+- 🔄 Seamless looping & volume control
+- 🌗 Fade-in / fade-out playback
+- ⚡ Simple API via `AmbientlyEngine`
+- 🛠️ Next.js 13+ App Router ready
+- 📦 Lightweight, no external deps
 
-🌗 Fade-in / fade-out playback support
+---
 
-⚡ Simple API via AmbientlyEngine
-
-🛠️ Next.js 13+ App Router ready
-
-📦 Lightweight, no external deps
-
-📁 Project Structure
+## 📁 Project Structure
+```plaintext
 .
-├── ambiently-core/        # Core audio engine (library)
-│   ├── index.ts           # Exports Ambiently + AmbientlyEngine
-│   └── useAudioPlayer.ts
+├── ambiently-core/ # Core audio engine (library)
+│ ├── index.ts # Exports Ambiently + AmbientlyEngine
+│ └── useAudioPlayer.ts
 │
-├── demo/                  # Example Next.js app using Ambiently
-│   └── app/
-│       └── ambiently.tsx  # Demo AmbientlyPlayer
+├── demo/ # Example Next.js app using Ambiently
+│ └── app/
+│ └── ambiently.tsx # Demo AmbientlyPlayer
 │
-├── public/sounds/         # Sample sound files
+├── public/sounds/ # Sample sound files
 └── README.md
+```
 
-🚀 Getting Started
+---
 
-Run the development server:
+## 🚀 Getting Started
 
+#### Clone and run the demo locally:
+
+```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Then open http://localhost:3000 🚀
+```
+## 🛠️ Usage
+Install the core library:
+npm install ambiently-core
 
-
-Then open http://localhost:3000
- to see it in action.
-
-🛠️ Usage
-
-Example usage of AmbientlyEngine inside your Next.js component:
-
-"use client";
+### Example usage inside your Next.js component:
+```bash "use client";
 import { AmbientlyEngine } from "ambiently-core";
 
 const engine = new AmbientlyEngine([
@@ -67,11 +64,21 @@ export default function Player() {
     </button>
   );
 }
+```
+## 📦 Deployment
 
-📦 Deploy on Vercel
-
-The easiest way to deploy your Next.js app is on Vercel
+The easiest way to deploy the demo is on Vercel
 .
-
-Check out the official Next.js deployment docs
+Check out the Next.js deployment docs
  for more details.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+Feel free to open an issue
+ or submit a PR.
+
+## 📜 License
+
+MIT © Abhinandan Sharma
+
