@@ -51,7 +51,12 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-si
 .layer.on { border-color: var(--red); }
 .layer header { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
 .layer h3 { margin: 0; font-size: 1rem; font-weight: 700; }
-.layer .tag { font-size: 0.7rem; color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.1em; }
+.tag { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0.35rem 0 0; padding: 0.22rem 0.6rem; border-radius: 999px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.01em; border: 1px solid var(--line); color: var(--fg-2); background: rgba(255, 255, 255, 0.04); }
+.tag::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--fg-3); }
+.tag.recording { color: #e8d9b5; border-color: rgba(232, 217, 181, 0.4); } .tag.recording::before { background: #e8d9b5; }
+.tag.synth { color: var(--red); border-color: rgba(224, 32, 42, 0.5); } .tag.synth::before { background: var(--red); }
+.tag.music { color: #9fd0e0; border-color: rgba(159, 208, 224, 0.4); } .tag.music::before { background: #9fd0e0; }
+h3.tag { font-size: 0.78rem; margin: 0 0 0.8rem; }
 .toggle { width: 2.6rem; height: 1.5rem; flex: 0 0 auto; border-radius: 999px; border: 0; background: #2a2a2a; position: relative; transition: background-color 0.2s; }
 .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: #fff; transition: transform 0.2s; }
 .toggle.on { background: var(--red); }
@@ -61,6 +66,22 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-si
 
 .viz { height: 8rem; border: 1px solid var(--line); border-radius: 0.9rem; background: var(--panel); overflow: hidden; }
 .viz canvas { width: 100%; height: 100%; display: block; }
+
+.catalog { margin: 3rem 0 1rem; }
+.catalog-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.catalog-head h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.03em; }
+.catalog-head p { margin: 0; color: var(--fg-2); max-width: 34rem; }
+.catalog-group { margin-bottom: 1.6rem; }
+.catalog-grid { display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); }
+.sound { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: 'dot name state' 'dot note state'; column-gap: 0.7rem; align-items: center; text-align: left; padding: 0.8rem 0.95rem; border-radius: 0.8rem; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; transition: border-color 0.2s, background-color 0.2s; }
+.sound:hover { border-color: var(--fg-2); }
+.sound.on { border-color: var(--red); background: rgba(224, 32, 42, 0.08); }
+.sound-dot { grid-area: dot; width: 0.6rem; height: 0.6rem; border-radius: 50%; border: 1px solid var(--fg-3); }
+.sound.on .sound-dot { background: var(--red); border-color: var(--red); box-shadow: 0 0 0 4px rgba(224, 32, 42, 0.2); }
+.sound-name { grid-area: name; font-weight: 600; font-size: 0.95rem; }
+.sound-note { grid-area: note; color: var(--fg-3); font-size: 0.8rem; }
+.sound-state { grid-area: state; font-size: 0.75rem; color: var(--fg-3); }
+.sound.on .sound-state { color: var(--red); }
 
 .code { margin: 2rem 0; border: 1px solid var(--line); border-radius: 0.9rem; background: var(--panel); overflow: auto; }
 .code pre { margin: 0; padding: 1.2rem 1.4rem; color: var(--fg-2); line-height: 1.6; }
