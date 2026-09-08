@@ -1,5 +1,7 @@
 # Ambiently
 
+[![npm](https://img.shields.io/npm/v/ambiently?color=e0202a&label=npm)](https://www.npmjs.com/package/ambiently) [![CI](https://github.com/abhinandansharma/ambiently/actions/workflows/ci.yml/badge.svg)](https://github.com/abhinandansharma/ambiently/actions) ![MIT](https://img.shields.io/badge/license-MIT-f1ede4)
+
 A tiny ambient sound engine for the web. Layer looping tracks and synthesised
 ambiences, fade everything with gain ramps so nothing clicks, crossfade between
 scenes, and stop fighting autoplay policies. Zero dependencies. Works anywhere the
