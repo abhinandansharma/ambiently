@@ -72,5 +72,12 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-si
 .features h4 { margin: 0 0 0.35rem; font-size: 1rem; }
 .features p { margin: 0; color: var(--fg-2); font-size: 0.95rem; }
 
-footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--fg-3); font-size: 0.9rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+footer.wrap { border-top: 1px solid var(--line); padding-top: 2rem; padding-bottom: 3rem; margin-top: 1rem; color: var(--fg-3); font-size: 0.9rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 footer a { color: var(--fg-2); }
+
+.credits { border-top: 1px solid var(--line); padding: 1.5rem 0 0.5rem; color: var(--fg-3); font-size: 0.85rem; }
+.credits h4 { margin: 0 0 0.4rem; color: var(--fg-2); font-size: 0.95rem; }
+.credits p { margin: 0 0 0.6rem; max-width: 50rem; }
+.credits ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 0.2rem 1.5rem; }
+.credits a { color: var(--fg-2); }
+.credits a:hover { color: var(--fg); }

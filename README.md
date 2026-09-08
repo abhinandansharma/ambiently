@@ -155,6 +155,11 @@ The demo in `demo/` imports the library from `src/` directly, so changes show up
 without a build. It is exported statically and published to GitHub Pages by the
 workflow in `.github/workflows/`.
 
+The demo's field recordings (rain, fireplace, ocean, forest, café, thunder, wind,
+crickets) are CC0 recordings from Freesound found through Openverse, cut to 30 second
+seamless loops and encoded as AAC. Sources are listed in `demo/public/sounds/CREDITS.json`
+and on the demo page. The library itself ships no audio.
+
 ## License
 
 MIT © Abhinandan Sharma

@@ -1,4 +1,5 @@
 import Mixer from './components/Mixer';
+import credits from '../public/sounds/CREDITS.json';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
@@ -21,6 +22,15 @@ export default function Page() {
           <div><h4>Autoplay handled</h4><p>The context wakes on the first gesture and starts whatever you asked for.</p></div>
           <div><h4>React ready</h4><p><code>useAmbiently()</code> keeps your layers in sync and re-renders on every change.</p></div>
           <div><h4>Tiny</h4><p>About 5 kB gzipped, zero dependencies, ESM and CJS, typed.</p></div>
+        </section>
+        <section className="credits">
+          <h4>Sample recordings</h4>
+          <p>All field recordings are CC0 (public domain) from Freesound via Openverse, cut to seamless loops. Thank you to the recordists:</p>
+          <ul>
+            {Object.entries(credits as Record<string, { title: string; creator?: string; source?: string }>).map(([k, c]) => (
+              <li key={k}><a href={c.source} target="_blank" rel="noreferrer">{c.title}</a>{c.creator ? ` — ${c.creator}` : ''}</li>
+            ))}
+          </ul>
         </section>
       </main>
       <footer className="wrap">

@@ -5,26 +5,33 @@ import type { LayerConfig } from 'ambiently';
 import Visualizer from './Visualizer';
 
 const NAMES: Record<string, { name: string; note: string }> = {
-  rain: { name: 'Rain', note: 'synth · pink noise, high-pass, slow swell' },
-  wind: { name: 'Wind', note: 'synth · brown noise, wandering band-pass' },
-  fire: { name: 'Fire', note: 'synth · rumble plus gated crackles' },
+  rain: { name: 'Rain (synth)', note: 'synth · pink noise, high-pass, slow swell' },
+  wind: { name: 'Wind (synth)', note: 'synth · brown noise, wandering band-pass' },
+  fire: { name: 'Fire (synth)', note: 'synth · rumble plus gated crackles' },
   hum: { name: 'Hum', note: 'synth · 50 Hz with harmonics' },
-  lofi: { name: 'Lo-fi beat', note: 'file · mp3, seamless loop' },
-  piano: { name: 'Piano loop', note: 'file · mp3, seamless loop' },
+  'rain-rec': { name: 'Soft rain', note: 'recording · CC0, seamless loop' },
+  fireplace: { name: 'Fireplace', note: 'recording · CC0, seamless loop' },
+  ocean: { name: 'Ocean waves', note: 'recording · CC0, seamless loop' },
+  forest: { name: 'Forest birds', note: 'recording · CC0, seamless loop' },
+  cafe: { name: 'Café chatter', note: 'recording · CC0, seamless loop' },
+  thunder: { name: 'Thunder', note: 'recording · CC0, seamless loop' },
+  'wind-rec': { name: 'Wind at the window', note: 'recording · CC0, seamless loop' },
+  night: { name: 'Crickets at night', note: 'recording · CC0, seamless loop' },
+  lofi: { name: 'Lo-fi beat', note: 'music · mp3 loop' },
+  piano: { name: 'Piano loop', note: 'music · mp3 loop' },
 };
 
 function scenes(base: string): Record<string, LayerConfig[]> {
-  const lofi = `${base}/sounds/lofi-relax-beat.mp3`;
-  const piano = `${base}/sounds/piano-loop.mp3`;
+  const s = (f: string) => `${base}/sounds/${f}`;
   return {
-    'Rainy café': [{ id: 'rain', synth: 'rain', volume: 0.45 }, { id: 'lofi', src: lofi, volume: 0.55 }],
-    'Fireside': [{ id: 'fire', synth: 'fire', volume: 0.6 }, { id: 'wind', synth: 'wind', volume: 0.2 }, { id: 'piano', src: piano, volume: 0.35 }],
+    'Rainy café': [{ id: 'rain-rec', src: s('rain.m4a'), volume: 0.5 }, { id: 'cafe', src: s('cafe.m4a'), volume: 0.35 }, { id: 'lofi', src: s('lofi-relax-beat.mp3'), volume: 0.45 }],
+    'Fireside': [{ id: 'fireplace', src: s('fireplace.m4a'), volume: 0.6 }, { id: 'wind-rec', src: s('wind.m4a'), volume: 0.2 }, { id: 'piano', src: s('piano-loop.mp3'), volume: 0.3 }],
+    'Storm': [{ id: 'thunder', src: s('thunder.m4a'), volume: 0.7 }, { id: 'rain-rec', src: s('rain.m4a'), volume: 0.6 }, { id: 'wind', synth: 'wind', volume: 0.35 }],
+    'Beach': [{ id: 'ocean', src: s('ocean.m4a'), volume: 0.7 }, { id: 'wind-rec', src: s('wind.m4a'), volume: 0.15 }],
+    'Forest morning': [{ id: 'forest', src: s('forest.m4a'), volume: 0.6 }, { id: 'rain', synth: 'rain', volume: 0.12 }],
+    'Night': [{ id: 'night', src: s('night.m4a'), volume: 0.55 }, { id: 'hum', synth: 'hum', volume: 0.08 }],
     'Deep focus': [{ id: 'hum', synth: 'hum', volume: 0.25 }, { id: 'rain', synth: 'rain', volume: 0.25 }],
-    'Storm': [{ id: 'rain', synth: 'rain', volume: 0.8 }, { id: 'wind', synth: 'wind', volume: 0.7 }],
-    'Everything': [
-      { id: 'rain', synth: 'rain', volume: 0.35 }, { id: 'wind', synth: 'wind', volume: 0.2 }, { id: 'fire', synth: 'fire', volume: 0.3 },
-      { id: 'hum', synth: 'hum', volume: 0.1 }, { id: 'lofi', src: lofi, volume: 0.5 }, { id: 'piano', src: piano, volume: 0.3 },
-    ],
+    'Synth only': [{ id: 'rain', synth: 'rain', volume: 0.4 }, { id: 'wind', synth: 'wind', volume: 0.25 }, { id: 'fire', synth: 'fire', volume: 0.35 }, { id: 'hum', synth: 'hum', volume: 0.1 }],
   };
 }
 
