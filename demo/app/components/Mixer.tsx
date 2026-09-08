@@ -83,7 +83,7 @@ export default function Mixer({ base }: { base: string }) {
           </button>
           <div className="row">
             <label>Master</label>
-            <input type="range" min={0} max={1} step={0.01} value={a.masterVolume} onChange={(e) => a.setMasterVolume(e.target.valueAsNumber)} />
+            <input type="range" aria-label="Master volume" min={0} max={1} step={0.01} value={a.masterVolume} onChange={(e) => a.setMasterVolume(e.target.valueAsNumber)} />
           </div>
           <span className="hint">{a.unlocked ? 'Audio unlocked. Every change below is a gain ramp.' : 'Browsers need one click before audio can start.'}</span>
         </div>
@@ -95,6 +95,7 @@ export default function Mixer({ base }: { base: string }) {
         ))}
       </div>
 
+      <h2 className="sr-only">Mixer</h2>
       <section className="mixer">
         {layers.map((l) => (
           <div key={l.id} className={`layer ${layerOn(l.id) ? 'on' : ''}`}>
@@ -105,7 +106,7 @@ export default function Mixer({ base }: { base: string }) {
               </div>
               <button className={`toggle ${layerOn(l.id) ? 'on' : ''}`} aria-label={`Toggle ${l.id}`} onClick={() => a.toggle(l.id)} />
             </header>
-            <input type="range" min={0} max={1} step={0.01} value={volumeOf(l.id)} onChange={(e) => a.setVolume(l.id, e.target.valueAsNumber)} />
+            <input type="range" aria-label={`${NAMES[l.id]?.name ?? l.id} volume`} min={0} max={1} step={0.01} value={volumeOf(l.id)} onChange={(e) => a.setVolume(l.id, e.target.valueAsNumber)} />
             <div className="meter"><i style={{ width: `${(layerOn(l.id) ? volumeOf(l.id) : 0) * 100}%` }} /></div>
           </div>
         ))}

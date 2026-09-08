@@ -16,15 +16,15 @@ export default function Page() {
       <main className="wrap">
         <Mixer base={base} />
         <section className="features">
-          <div><h4>Layers, not a tag</h4><p>Each sound has its own gain. Stack rain under a beat under a fireplace and mix live.</p></div>
-          <div><h4>Nothing clicks</h4><p>Play, pause, volume and scene changes are gain ramps on the audio clock.</p></div>
-          <div><h4>Synth ambiences</h4><p>Rain, wind, fire, hum and three colours of noise are generated in the browser. No files.</p></div>
-          <div><h4>Autoplay handled</h4><p>The context wakes on the first gesture and starts whatever you asked for.</p></div>
-          <div><h4>React ready</h4><p><code>useAmbiently()</code> keeps your layers in sync and re-renders on every change.</p></div>
-          <div><h4>Tiny</h4><p>About 5 kB gzipped, zero dependencies, ESM and CJS, typed.</p></div>
+          <div><h3>Layers, not a tag</h3><p>Each sound has its own gain. Stack rain under a beat under a fireplace and mix live.</p></div>
+          <div><h3>Nothing clicks</h3><p>Play, pause, volume and scene changes are gain ramps on the audio clock.</p></div>
+          <div><h3>Synth ambiences</h3><p>Rain, wind, fire, hum and three colours of noise are generated in the browser. No files.</p></div>
+          <div><h3>Autoplay handled</h3><p>The context wakes on the first gesture and starts whatever you asked for.</p></div>
+          <div><h3>React ready</h3><p><code>useAmbiently()</code> keeps your layers in sync and re-renders on every change.</p></div>
+          <div><h3>Tiny</h3><p>About 5 kB gzipped, zero dependencies, ESM and CJS, typed.</p></div>
         </section>
         <section className="credits">
-          <h4>Sample recordings</h4>
+          <h2>Sample recordings</h2>
           <p>All field recordings are CC0 (public domain) from Freesound via Openverse, cut to seamless loops. Thank you to the recordists:</p>
           <ul>
             {Object.entries(credits as Record<string, { title: string; creator?: string; source?: string }>).map(([k, c]) => (
