@@ -7,7 +7,9 @@ ambiences, fade everything with gain ramps so nothing clicks, crossfade between
 scenes, and stop fighting autoplay policies. Zero dependencies. Works anywhere the
 Web Audio API does, with first-class React and Next.js bindings.
 
-**Demo:** https://abhinandansharma.github.io/ambiently/
+**Demo:** https://abhinandansharma.github.io/ambiently/ — eight scenes, fourteen sounds, and an "All sounds" catalogue where you can add any layer to the mix and read off the code that reproduces it.
+
+![Ambiently demo](screenshots/demo.png)
 
 ```bash
 npm install ambiently
