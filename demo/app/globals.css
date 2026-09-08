@@ -104,8 +104,9 @@ footer a { color: var(--fg-2); }
 .credits a:hover { color: var(--fg); }
 
 /* made-by badge */
-.made-by { position: fixed; left: 16px; bottom: 16px; z-index: 950; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.85rem 0.5rem 0.7rem; border-radius: 999px; background: rgba(11,11,11,0.8); color: var(--fg); border: 1px solid var(--line); font-family: inherit; font-size: 0.8rem; font-weight: 500; line-height: 1; text-decoration: none; letter-spacing: 0; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background-color 0.15s, color 0.15s, transform 0.15s; }
-.made-by:hover { background: var(--fg); color: var(--bg); transform: translateY(-1px); }
-.made-by-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--red); box-shadow: 0 0 0 3px rgba(224, 32, 42, 0.25); }
-.made-by svg { opacity: 0.7; }
-@media (max-width: 560px) { .made-by { left: 12px; bottom: 12px; font-size: 0.75rem; } }
+.made-by { position: fixed; left: 18px; bottom: 18px; z-index: 950; display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.35rem 0.75rem 0.35rem 0.35rem; border-radius: 999px; background: rgba(11,11,11,0.8); color: var(--fg); font-size: 0.8rem; font-weight: 400; line-height: 1; text-decoration: none; letter-spacing: 0; transition: background-color 0.2s, transform 0.2s; }
+.made-by b { font-weight: 600; }
+.made-by-mark { display: block; border-radius: 6px; transition: transform 0.25s cubic-bezier(0.19, 1, 0.22, 1); }
+.made-by:hover { background: #1c1c1c; }
+.made-by:hover .made-by-mark { transform: rotate(-8deg) scale(1.08); }
+@media (max-width: 560px) { .made-by { left: 12px; bottom: 12px; } }
