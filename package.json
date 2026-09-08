@@ -1,8 +1,8 @@
 {
   "name": "ambiently",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A tiny ambient sound engine for the web: layered loops, gain-ramp fades, crossfading scenes and procedurally synthesised rain, wind, fire and noise. Zero dependencies. React and Next.js ready.",
-  "keywords": ["ambient", "audio", "web-audio", "sound", "background-sound", "react", "nextjs", "noise", "rain", "lofi"],
+  "keywords": ["ambient", "audio", "web-audio", "sound", "background-sound", "react", "nextjs", "noise", "rain", "lofi", "synth", "drums", "percussion", "one-shot"],
   "author": "Abhinandan Sharma <abhinandan0659@gmail.com>",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/abhinandansharma/ambiently.git" },

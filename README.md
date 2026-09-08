@@ -49,6 +49,31 @@ That is a working three-layer soundscape. Calling `play()` or `toggle()` inside 
 click handler unlocks audio. If you call it earlier, the engine waits for the first
 pointer, key or touch event and then starts.
 
+## One-shot hits
+
+Percussion and short melodic hits, synthesised on demand, for instruments, games and
+UI sounds. Twenty voices: `kick`, `sub`, `tom`, `snare`, `rim`, `clap`, `hat`, `shaker`,
+`wood`, `pluck`, `bell`, `chime`, `stab`, `blip`, `zap`, `laser`, `sweep`, `riser`,
+`noise`, `drop`.
+
+```ts
+import { createHits } from 'ambiently';
+
+const ctx = new AudioContext();
+const hits = createHits(ctx);
+
+window.addEventListener('keydown', (e) => {
+  const length = hits.play('kick', { velocity: 0.9, pitch: -2 }); // seconds, handy for animation
+});
+
+// schedule on the audio clock for tight loops
+hits.play('hat', { when: ctx.currentTime + 0.25 });
+```
+
+`createHits(ctx, destination?)` returns `{ play, duration, output }`. Everything is built
+from oscillators, filters and the same noise buffers the ambiences use, so there is
+nothing to download. This is what powers [Patatap](https://abhinandansharma.github.io/patatap/).
+
 ## React and Next.js
 
 ```tsx

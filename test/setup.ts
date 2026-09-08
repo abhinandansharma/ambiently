@@ -23,7 +23,7 @@ class Source extends Node {
   started = false; stopped = false;
   start() { this.started = true; } stop() { this.stopped = true; }
 }
-class Osc extends Node { type = 'sine'; frequency = new Param(440); started = false; start() { this.started = true; } stop() {} }
+class Osc extends Node { type = 'sine'; frequency = new Param(440); detune = new Param(0); onended: (() => void) | null = null; started = false; start() { this.started = true; } stop() {} }
 class Buffer {
   channels: Float32Array[];
   constructor(public numberOfChannels: number, public length: number, public sampleRate: number) {
