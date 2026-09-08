@@ -1,0 +1,42 @@
+{
+  "name": "ambiently",
+  "version": "0.1.0",
+  "description": "A tiny ambient sound engine for the web: layered loops, gain-ramp fades, crossfading scenes and procedurally synthesised rain, wind, fire and noise. Zero dependencies. React and Next.js ready.",
+  "keywords": ["ambient", "audio", "web-audio", "sound", "background-sound", "react", "nextjs", "noise", "rain", "lofi"],
+  "author": "Abhinandan Sharma <abhinandan0659@gmail.com>",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/abhinandansharma/ambiently.git" },
+  "homepage": "https://abhinandansharma.github.io/ambiently/",
+  "bugs": { "url": "https://github.com/abhinandansharma/ambiently/issues" },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs" },
+    "./react": { "types": "./dist/react.d.ts", "import": "./dist/react.js", "require": "./dist/react.cjs" }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "demo": "npm --prefix demo run dev",
+    "demo:build": "npm run build && npm --prefix demo run build",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "peerDependencies": { "react": ">=18" },
+  "peerDependenciesMeta": { "react": { "optional": true } },
+  "devDependencies": {
+    "@types/react": "^19.1.10",
+    "react": "^19.1.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "jsdom": "^26.1.0"
+  },
+  "engines": { "node": ">=18" }
+}
