@@ -81,7 +81,7 @@ h3.tag { font-size: 0.78rem; margin: 0 0 0.8rem; }
 .sound-name { grid-area: name; font-weight: 600; font-size: 0.95rem; }
 .sound-note { grid-area: note; color: var(--fg-3); font-size: 0.8rem; }
 .sound-state { grid-area: state; font-size: 0.75rem; color: var(--fg-2); }
-.sound.on .sound-state { color: var(--red); }
+.sound.on .sound-state { color: var(--fg); }
 
 .code { margin: 2rem 0; border: 1px solid var(--line); border-radius: 0.9rem; background: var(--panel); overflow: auto; }
 .code pre { margin: 0; padding: 1.2rem 1.4rem; color: var(--fg-2); line-height: 1.6; }
