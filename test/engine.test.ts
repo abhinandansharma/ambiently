@@ -132,4 +132,17 @@ describe('AmbientlyEngine', () => {
     expect(ctx.state).toBe('closed');
     expect(engine.getState().layers).toEqual([]);
   });
+
+  it('reverb: one shared convolver, a send per layer that asks for it, ramped by setReverb', async () => {
+    const { ctx, engine } = mk([{ id: 'a', synth: 'rain', reverb: 0.4 }, { id: 'b', synth: 'wind' }, { id: 'c', synth: 'hum', reverb: 0.2 }]);
+    await engine.play();
+    expect(ctx.created.convolvers.length).toBe(1);
+    expect(ctx.created.convolvers[0].buffer).toBeTruthy();
+    expect(engine.getState().layers.map((l) => l.reverb)).toEqual([0.4, 0, 0.2]);
+    engine.setReverb('b', 0.9);
+    expect(engine.getState().layers[1].reverb).toBe(0.9);
+    const send = ctx.created.gains.find((g) => g.gain.calls.some((c) => c[0] === 'linear' && c[1] === 0.9));
+    expect(send).toBeTruthy();
+    expect(ctx.created.convolvers.length).toBe(1);
+  });
 });

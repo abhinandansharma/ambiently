@@ -13,6 +13,7 @@ export interface UseAmbiently extends EngineState {
   pause: (id?: string) => void;
   toggle: (id?: string) => void;
   setVolume: (id: string, volume: number) => void;
+  setReverb: (id: string, amount: number) => void;
   setMasterVolume: (volume: number) => void;
   mute: () => void;
   unmute: () => void;
@@ -64,13 +65,14 @@ export function useAmbiently(layers: LayerConfig[], options: UseAmbientlyOptions
   const pause = useCallback((id?: string) => engineRef.current?.pause(id), []);
   const toggle = useCallback((id?: string) => { void engineRef.current?.toggle(id); }, []);
   const setVolume = useCallback((id: string, v: number) => { engineRef.current?.setVolume(id, v); }, []);
+  const setReverb = useCallback((id: string, v: number) => { engineRef.current?.setReverb(id, v); }, []);
   const setMasterVolume = useCallback((v: number) => { engineRef.current?.setMasterVolume(v); }, []);
   const mute = useCallback(() => { engineRef.current?.mute(); }, []);
   const unmute = useCallback(() => { engineRef.current?.unmute(); }, []);
   const crossfadeTo = useCallback((l: LayerConfig[], ms?: number) => { void engineRef.current?.crossfadeTo(l, ms); }, []);
 
-  return useMemo(() => ({ engine: engineRef.current, ...state, play, pause, toggle, setVolume, setMasterVolume, mute, unmute, crossfadeTo }),
-    [state, play, pause, toggle, setVolume, setMasterVolume, mute, unmute, crossfadeTo]);
+  return useMemo(() => ({ engine: engineRef.current, ...state, play, pause, toggle, setVolume, setReverb, setMasterVolume, mute, unmute, crossfadeTo }),
+    [state, play, pause, toggle, setVolume, setReverb, setMasterVolume, mute, unmute, crossfadeTo]);
 }
 
 export interface AmbientlyProps extends UseAmbientlyOptions {

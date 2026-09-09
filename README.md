@@ -7,7 +7,7 @@ ambiences, fade everything with gain ramps so nothing clicks, crossfade between
 scenes, and stop fighting autoplay policies. Zero dependencies. Works anywhere the
 Web Audio API does, with first-class React and Next.js bindings.
 
-**Demo:** https://abhinandansharma.github.io/ambiently/ — 25 scenes and 47 sounds (24 field recordings, 2 music loops, 21 synths), with an "All sounds" catalogue where you can add any layer to the mix and read off the code that reproduces it.
+**Demo:** https://abhinandansharma.github.io/ambiently/ — 32 scenes and 61 sounds (24 field recordings, 12 music loops, 25 synths), a searchable catalogue by category, per-layer reverb, and mixes you can share by link.
 
 ![Ambiently demo](screenshots/demo.png)
 
@@ -24,9 +24,10 @@ small mixer instead:
 - **Layers.** Rain under a lo-fi track under a fireplace, each with its own volume.
 - **Seamless loops.** Decoded buffers on `AudioBufferSourceNode`, so loops are gapless.
 - **Fades everywhere.** Play, pause, volume changes and crossfades are all gain ramps.
-- **Synthesised ambiences.** Twenty-one of them, from `rain`, `wind`, `fire` and `ocean` to
-  `crickets`, `birds`, `clock`, `vinyl` and `heartbeat`, all generated procedurally. No audio
-  files to host or license.
+- **Synthesised ambiences.** Twenty-five of them, from `rain`, `wind`, `fire` and `ocean` to
+  `crickets`, `birds`, `clock`, `vinyl`, `heartbeat`, and music: a `lofi` beat, a `pad`, a
+  `musicbox` and `bells`. All generated procedurally. No audio files to host or license.
+- **A shared reverb.** Give any layer a `reverb` send and it goes into one synthetic hall.
 - **Autoplay handled.** The context is created lazily and resumed on the first user
   gesture. Anything you asked to play starts the moment the browser allows it.
 - **SSR safe.** Nothing touches `window` until you play.
@@ -125,6 +126,7 @@ safe to render on the server.
 | `fadeMs` | `800` | Default fade for every transition |
 | `context` | created lazily | Bring your own `AudioContext` |
 | `unlockOn` | `['pointerdown','keydown','touchstart']` | Gesture events that resume the context. `false` to manage it yourself |
+| `room` | `{ seconds: 2.6, decay: 3 }` | The shared reverb's tail length and how fast it dies away |
 
 ### Layers
 
@@ -137,6 +139,7 @@ interface LayerConfig {
   loop?: boolean;        // default true (files only; synths always loop)
   fadeMs?: number;       // per-layer fade override
   playbackRate?: number; // files only
+  reverb?: number;       // 0 to 1 send into the shared reverb, default 0
 }
 ```
 
@@ -152,6 +155,7 @@ interface LayerConfig {
 | `remove(id, fadeMs?)` | Fade out and forget |
 | `crossfadeTo(layers, fadeMs?)` | Replace the scene: fade out what is gone, fade in what is new |
 | `setVolume(id, v, fadeMs?)` | |
+| `setReverb(id, v, fadeMs?)` | Send level into the shared reverb |
 | `setMasterVolume(v, fadeMs?)` | |
 | `mute()` / `unmute()` | Master bus |
 | `getState()` | `{ playing, unlocked, masterVolume, muted, layers[] }` |
@@ -162,7 +166,7 @@ interface LayerConfig {
 
 ### Synth presets
 
-Twenty-one, built from three cached noise buffers plus oscillators, filters, LFOs and a
+Twenty-five, built from three cached noise buffers plus oscillators, filters, LFOs and a
 few scheduled events. `SYNTH_PRESETS` exports the list.
 
 | Preset | What it is |
@@ -186,6 +190,10 @@ few scheduled events. `SYNTH_PRESETS` exports the list.
 | `drone` | Detuned saws an octave apart under a breathing low-pass, with a sub |
 | `space` | Hull rumble, a tone that drifts over minutes, a faint whistle above |
 | `white`, `pink`, `brown` | The noise itself |
+| `lofi` | A swung boom-bap beat at 72 bpm from the hit voices, warm chords, hiss and crackle |
+| `pad` | Slow detuned chords under a breathing low-pass, changing every sixteen seconds |
+| `musicbox` | A pentatonic melody, one bright note at a time |
+| `bells` | Low inharmonic bells, slow and never quite in time |
 
 They cost nothing to ship and loop forever without seams.
 
@@ -206,7 +214,9 @@ The demo's twenty-four field recordings (rain, heavy rain, thunder, wind, ocean,
 the deep sea, a stream, a waterfall, forest, rainforest, meadow, crickets, frogs, fireplace,
 café, market, keyboard, air conditioner, a purring cat, wind chimes, city, train, airplane)
 are CC0 recordings from Freesound found through Openverse, cut to 30 second seamless
-loops and encoded as AAC. Sources are listed in `demo/public/sounds/CREDITS.json`
+loops and encoded as AAC. The ten CC0 music loops (lo-fi beats, lo-fi piano, e-piano and
+guitar, a Rhodes progression, boom-bap drums, a jazz loop, an acoustic piece, an ambient
+loop) come from the same place and are used whole so the beat stays seamless. Sources are listed in `demo/public/sounds/CREDITS.json`
 and on the demo page. The library itself ships no audio.
 
 ## License

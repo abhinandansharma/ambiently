@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { fillNoise, createSynth } from '../src/synth';
+import { createSynth } from '../src/synth';
+import { fillNoise } from '../src/noise';
 import { SYNTH_PRESETS } from '../src/types';
 import { MockAudioContext } from './setup';
 
@@ -35,7 +36,7 @@ describe('createSynth', () => {
       expect((ctx as unknown as MockAudioContext).created.sources.length).toBe(before);
     });
   }
-  it('lists twenty-one presets with no duplicates', () => {
-    expect(new Set(SYNTH_PRESETS).size).toBe(21);
+  it('lists twenty-five presets with no duplicates', () => {
+    expect(new Set(SYNTH_PRESETS).size).toBe(25);
   });
 });

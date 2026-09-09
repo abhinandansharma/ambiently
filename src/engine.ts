@@ -4,6 +4,7 @@ import { createSynth, type SynthVoice } from './synth';
 interface Layer {
   config: LayerConfig;
   gain: GainNode | null;
+  send: GainNode | null; // to the shared reverb
   source: AudioBufferSourceNode | null;
   synth: SynthVoice | null;
   buffer: AudioBuffer | null;
@@ -27,7 +28,9 @@ const bufferCache = new Map<string, Promise<AudioBuffer>>();
 export class AmbientlyEngine {
   private ctx: AudioContext | null;
   private master: GainNode | null = null;
+  private reverb: ConvolverNode | null = null;
   private analyser: AnalyserNode | null = null;
+  private room: { seconds: number; decay: number };
   private layers = new Map<string, Layer>();
   private listeners = new Map<AmbientlyEvent, Set<Listener>>();
   private masterVolume: number;
@@ -41,6 +44,7 @@ export class AmbientlyEngine {
     this.ctx = options.context ?? null;
     this.masterVolume = clamp(options.masterVolume ?? 1);
     this.fadeMs = options.fadeMs ?? 800;
+    this.room = { seconds: options.room?.seconds ?? 2.6, decay: options.room?.decay ?? 3 };
     this.unlockEvents = options.unlockOn === undefined ? DEFAULT_UNLOCK : options.unlockOn;
     layers.forEach((l) => this.add(l));
     if (this.ctx) this.attachContext(this.ctx);
@@ -56,10 +60,11 @@ export class AmbientlyEngine {
     if (existing) {
       existing.config = { ...existing.config, ...config };
       if (existing.gain && existing.playing) this.ramp(existing.gain.gain, existing.config.volume ?? 0.5, config.fadeMs ?? this.fadeMs);
+      if (config.reverb !== undefined) this.applyReverb(existing, config.fadeMs ?? this.fadeMs);
       this.emit('layers');
       return this;
     }
-    const layer: Layer = { config: { volume: 0.5, loop: true, ...config }, gain: null, source: null, synth: null, buffer: null, wanted: false, playing: false, loading: false };
+    const layer: Layer = { config: { volume: 0.5, loop: true, reverb: 0, ...config }, gain: null, send: null, source: null, synth: null, buffer: null, wanted: false, playing: false, loading: false };
     this.layers.set(config.id, layer);
     if (this.isPlaying()) void this.play(config.id);
     this.emit('layers');
@@ -128,6 +133,16 @@ export class AmbientlyEngine {
     return this;
   }
 
+  /** How much of a layer goes to the shared reverb, 0 to 1. */
+  setReverb(id: string, amount: number, fadeMs?: number): this {
+    const layer = this.layers.get(id);
+    if (!layer) return this;
+    layer.config.reverb = clamp(amount);
+    this.applyReverb(layer, fadeMs ?? layer.config.fadeMs ?? this.fadeMs);
+    this.emit('volume');
+    return this;
+  }
+
   setMasterVolume(volume: number, fadeMs?: number): this {
     this.masterVolume = clamp(volume);
     if (this.master && !this.muted) this.ramp(this.master.gain, this.masterVolume, fadeMs ?? this.fadeMs);
@@ -161,6 +176,7 @@ export class AmbientlyEngine {
       id: l.config.id,
       type: l.config.synth ? 'synth' : 'file',
       volume: l.config.volume ?? 0.5,
+      reverb: l.config.reverb ?? 0,
       playing: l.wanted,
       loading: l.loading,
       error: l.error,
@@ -207,6 +223,7 @@ export class AmbientlyEngine {
     if (this.ctx && this.ctx.state !== 'closed') void this.ctx.close().catch(() => undefined);
     this.ctx = null;
     this.master = null;
+    this.reverb = null;
     this.analyser = null;
   }
 
@@ -279,6 +296,7 @@ export class AmbientlyEngine {
         layer.gain.gain.value = 0;
         layer.gain.connect(this.master!);
       }
+      if ((layer.config.reverb ?? 0) > 0 && !layer.send) this.applyReverb(layer, 0);
       if (layer.config.synth) {
         if (!layer.synth) {
           layer.synth = createSynth(ctx, layer.config.synth);
@@ -334,8 +352,45 @@ export class AmbientlyEngine {
   private killLayer(layer: Layer): void {
     if (layer.stopTimer) clearTimeout(layer.stopTimer);
     this.stopSources(layer);
+    if (layer.send) { layer.send.disconnect(); layer.send = null; }
     if (layer.gain) { layer.gain.disconnect(); layer.gain = null; }
     layer.wanted = false;
+  }
+
+  /** The shared reverb: a convolver fed by a synthetic impulse (decaying noise), built on first use. */
+  private ensureReverb(ctx: AudioContext): ConvolverNode {
+    if (this.reverb) return this.reverb;
+    const { seconds, decay } = this.room;
+    const length = Math.max(1, Math.floor(ctx.sampleRate * seconds));
+    const impulse = ctx.createBuffer(2, length, ctx.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const data = impulse.getChannelData(ch);
+      let seed = 11 + ch * 17;
+      for (let i = 0; i < length; i++) {
+        seed ^= seed << 13; seed >>>= 0; seed ^= seed >>> 17; seed ^= seed << 5; seed >>>= 0;
+        const r = seed / 4294967296 * 2 - 1;
+        data[i] = r * Math.pow(1 - i / length, decay);
+      }
+    }
+    const convolver = ctx.createConvolver();
+    convolver.buffer = impulse;
+    convolver.connect(this.master!);
+    this.reverb = convolver;
+    return convolver;
+  }
+
+  /** Point a layer's send at the shared reverb at its configured amount. Creates the send lazily. */
+  private applyReverb(layer: Layer, fadeMs: number): void {
+    const amount = layer.config.reverb ?? 0;
+    if (!layer.gain || !this.ctx) return; // applied when the layer starts
+    if (!layer.send) {
+      if (amount <= 0) return;
+      layer.send = this.ctx.createGain();
+      layer.send.gain.value = 0;
+      layer.gain.connect(layer.send);
+      layer.send.connect(this.ensureReverb(this.ctx));
+    }
+    this.ramp(layer.send.gain, amount, fadeMs);
   }
 
   private ramp(param: AudioParam, target: number, ms: number): void {

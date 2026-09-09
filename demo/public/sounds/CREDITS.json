@@ -214,5 +214,95 @@
   "license": "cc0",
   "source": "https://freesound.org/people/Garuda1982/sounds/529573",
   "provider": "freesound"
+ },
+ "lofi-moody": {
+  "title": "Moody Lofi Loop 70bpm",
+  "url": "https://cdn.freesound.org/previews/659/659309_13228046-hq.mp3",
+  "duration": 76428,
+  "creator": "Seth_Makes_Sounds",
+  "license": "cc0",
+  "source": "https://freesound.org/people/Seth_Makes_Sounds/sounds/659309",
+  "provider": "freesound"
+ },
+ "lofi-146": {
+  "title": "Lofi Loop 1-4-6",
+  "url": "https://cdn.freesound.org/previews/622/622852_13228046-hq.mp3",
+  "duration": 10666,
+  "creator": "Seth_Makes_Sounds",
+  "license": "cc0",
+  "source": "https://freesound.org/people/Seth_Makes_Sounds/sounds/622852",
+  "provider": "freesound"
+ },
+ "epiano": {
+  "title": "Chill Lofi Epiano Loop 80 BPM.wav",
+  "url": "https://cdn.freesound.org/previews/629/629170_12574855-hq.mp3",
+  "duration": 24000,
+  "creator": "holizna",
+  "license": "cc0",
+  "source": "https://freesound.org/people/holizna/sounds/629170",
+  "provider": "freesound"
+ },
+ "lofi-piano": {
+  "title": "Lofi Piano Loop 80 BPM(2).wav",
+  "url": "https://cdn.freesound.org/previews/629/629174_12574855-hq.mp3",
+  "duration": 47594,
+  "creator": "holizna",
+  "license": "cc0",
+  "source": "https://freesound.org/people/holizna/sounds/629174",
+  "provider": "freesound"
+ },
+ "lofi-guitar": {
+  "title": "Lofi Guitar Loop EM 119 BPM(3).wav",
+  "url": "https://cdn.freesound.org/previews/629/629150_12574855-hq.mp3",
+  "duration": 38319,
+  "creator": "holizna",
+  "license": "cc0",
+  "source": "https://freesound.org/people/holizna/sounds/629150",
+  "provider": "freesound"
+ },
+ "jazz": {
+  "title": "(Jazz Loop) Rusted Maid",
+  "url": "https://cdn.freesound.org/previews/464/464923_4284968-hq.mp3",
+  "duration": 30843,
+  "creator": "plasterbrain",
+  "license": "cc0",
+  "source": "https://freesound.org/people/plasterbrain/sounds/464923",
+  "provider": "freesound"
+ },
+ "rhodes": {
+  "title": "rhodes progression.wav",
+  "url": "https://cdn.freesound.org/previews/502/502937_10878908-hq.mp3",
+  "duration": 11294,
+  "creator": "scruzmusic",
+  "license": "cc0",
+  "source": "https://freesound.org/people/scruzmusic/sounds/502937",
+  "provider": "freesound"
+ },
+ "boombap": {
+  "title": "hip hop drum loop (80 bpm)",
+  "url": "https://cdn.freesound.org/previews/649/649196_4582995-hq.mp3",
+  "duration": 36000,
+  "creator": "blainksaint",
+  "license": "cc0",
+  "source": "https://freesound.org/people/blainksaint/sounds/649196",
+  "provider": "freesound"
+ },
+ "plains": {
+  "title": "Acoustic Guitar and Keys - Plains Soundtrack",
+  "url": "https://cdn.freesound.org/previews/449/449812_1696610-hq.mp3",
+  "duration": 60250,
+  "creator": "tyballer92",
+  "license": "cc0",
+  "source": "https://freesound.org/people/tyballer92/sounds/449812",
+  "provider": "freesound"
+ },
+ "calm": {
+  "title": "Calm.mp3",
+  "url": "https://cdn.freesound.org/previews/504/504987_10282847-hq.mp3",
+  "duration": 19370,
+  "creator": "wi-photos",
+  "license": "cc0",
+  "source": "https://freesound.org/people/wi-photos/sounds/504987",
+  "provider": "freesound"
  }
 }

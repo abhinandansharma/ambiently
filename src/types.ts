@@ -3,12 +3,14 @@ export type SynthPreset =
   | 'white' | 'pink' | 'brown'
   | 'rain' | 'wind' | 'fire' | 'hum'
   | 'ocean' | 'stream' | 'thunder' | 'crickets' | 'birds' | 'frogs'
-  | 'drone' | 'space' | 'vinyl' | 'fan' | 'heartbeat' | 'clock' | 'city' | 'snow';
+  | 'drone' | 'space' | 'vinyl' | 'fan' | 'heartbeat' | 'clock' | 'city' | 'snow'
+  | 'lofi' | 'pad' | 'musicbox' | 'bells';
 
 /** Every synth preset, in catalogue order. */
 export const SYNTH_PRESETS: SynthPreset[] = [
   'rain', 'wind', 'fire', 'ocean', 'stream', 'thunder', 'crickets', 'birds', 'frogs', 'snow',
   'city', 'fan', 'clock', 'vinyl', 'heartbeat', 'hum', 'drone', 'space', 'white', 'pink', 'brown',
+  'lofi', 'pad', 'musicbox', 'bells',
 ];
 
 export interface LayerConfig {
@@ -26,6 +28,8 @@ export interface LayerConfig {
   fadeMs?: number;
   /** Playback rate for file layers. Default 1. */
   playbackRate?: number;
+  /** Reverb send, 0 to 1. Default 0. The engine builds one shared room from a synthetic impulse. */
+  reverb?: number;
 }
 
 export interface EngineOptions {
@@ -40,6 +44,8 @@ export interface EngineOptions {
    * resumes the context, then starts anything that was asked to play. Pass false to manage it yourself.
    */
   unlockOn?: string[] | false;
+  /** The shared reverb: tail length in seconds (default 2.6) and how fast it decays (default 3). */
+  room?: { seconds?: number; decay?: number };
 }
 
 export type AmbientlyEvent = 'play' | 'pause' | 'volume' | 'layers' | 'unlock' | 'load' | 'error';
@@ -48,6 +54,7 @@ export interface LayerState {
   id: string;
   type: 'file' | 'synth';
   volume: number;
+  reverb: number;
   playing: boolean;
   loading: boolean;
   error?: string;

@@ -18,19 +18,24 @@ export default function Page() {
         <section className="features">
           <div><h3>Layers, not a tag</h3><p>Each sound has its own gain. Stack rain under a beat under a fireplace and mix live.</p></div>
           <div><h3>Nothing clicks</h3><p>Play, pause, volume and scene changes are gain ramps on the audio clock.</p></div>
-          <div><h3>Synth ambiences</h3><p>Twenty-one ambiences are generated in the browser: rain, surf, a stream, thunder, crickets, birds, a clock, vinyl, a heartbeat and more. No files.</p></div>
+          <div><h3>Synth ambiences</h3><p>Twenty-five are generated in the browser: rain, surf, a stream, thunder, crickets, birds, a clock, vinyl, a heartbeat, even a lo-fi beat and a music box. No files.</p></div>
+          <div><h3>One shared room</h3><p>Every layer has a reverb send into a synthetic hall. Set it per layer, or leave it dry.</p></div>
           <div><h3>Autoplay handled</h3><p>The context wakes on the first gesture and starts whatever you asked for.</p></div>
           <div><h3>React ready</h3><p><code>useAmbiently()</code> keeps your layers in sync and re-renders on every change.</p></div>
           <div><h3>Tiny</h3><p>About 9 kB gzipped, zero dependencies, ESM and CJS, typed.</p></div>
         </section>
         <section className="credits">
-          <h2>Sample recordings</h2>
-          <p>All field recordings are CC0 (public domain) from Freesound via Openverse, cut to seamless loops. Thank you to the recordists:</p>
-          <ul>
-            {Object.entries(credits as Record<string, { title: string; creator?: string; source?: string }>).map(([k, c]) => (
-              <li key={k}><a href={c.source} target="_blank" rel="noreferrer">{c.title}</a>{c.creator ? ` — ${c.creator}` : ''}</li>
-            ))}
-          </ul>
+          <details>
+            <summary>
+              <span className="credits-title">Credits</span>
+              <span className="credits-sub">{Object.keys(credits).length} recordings and music loops, all CC0 from Freesound via Openverse. The library itself ships no audio.</span>
+            </summary>
+            <ul className="credits-grid">
+              {Object.entries(credits as Record<string, { title: string; creator?: string; source?: string }>).map(([k, c]) => (
+                <li key={k}><a href={c.source} target="_blank" rel="noreferrer">{c.title.replace(/\.(wav|mp3|aif|flac|ogg)$/i, '')}</a>{c.creator ? <span>{c.creator.replace(/^deleted_user_\d+$/, 'a deleted Freesound user')}</span> : null}</li>
+              ))}
+            </ul>
+          </details>
         </section>
       </main>
       <footer className="wrap">

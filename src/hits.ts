@@ -1,4 +1,4 @@
-import { noiseBuffer } from './synth';
+import { noiseBuffer } from './noise';
 
 /**
  * One-shot percussive and melodic hits, synthesised on demand. No samples, no files.

@@ -17,6 +17,7 @@ class Node {
 }
 class Gain extends Node { gain = new Param(1); }
 class Filter extends Node { type = 'lowpass'; frequency = new Param(350); Q = new Param(1); }
+class Convolver extends Node { buffer: any = null; normalize = true; }
 class Analyser extends Node { fftSize = 2048; smoothingTimeConstant = 0.8; getByteFrequencyData() {} }
 class Source extends Node {
   buffer: any = null; loop = false; playbackRate = new Param(1); onended: (() => void) | null = null;
@@ -36,10 +37,11 @@ export class MockAudioContext {
   currentTime = 0;
   sampleRate = 8000;
   destination = new Node();
-  created: { sources: Source[]; gains: Gain[] } = { sources: [], gains: [] };
+  created: { sources: Source[]; gains: Gain[]; convolvers: Convolver[] } = { sources: [], gains: [], convolvers: [] };
   createGain() { const g = new Gain(); this.created.gains.push(g); return g; }
   createBiquadFilter() { return new Filter(); }
   createAnalyser() { return new Analyser(); }
+  createConvolver() { const c = new Convolver(); this.created.convolvers.push(c); return c; }
   createOscillator() { return new Osc(); }
   createBufferSource() { const s = new Source(); this.created.sources.push(s); return s; }
   createBuffer(ch: number, len: number, sr: number) { return new Buffer(ch, len, sr); }
