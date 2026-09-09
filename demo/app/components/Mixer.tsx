@@ -62,8 +62,19 @@ export default function Mixer({ base }: { base: string }) {
     if (!removing) wantPlay.current = true;
   };
   const layerOn = (id: string) => a.layers.find((l) => l.id === id)?.playing ?? false;
-  const volumeOf = (id: string) => a.layers.find((l) => l.id === id)?.volume ?? 0;
-  const reverbOf = (id: string) => a.layers.find((l) => l.id === id)?.reverb ?? 0;
+  const volumeOf = (id: string) => a.layers.find((l) => l.id === id)?.volume ?? layers.find((l) => l.id === id)?.volume ?? 0.5;
+  const reverbOf = (id: string) => a.layers.find((l) => l.id === id)?.reverb ?? layers.find((l) => l.id === id)?.reverb ?? 0;
+
+  // Space plays and pauses when the focus is not in a control.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (e.code !== 'Space' || !t || ['INPUT', 'BUTTON', 'TEXTAREA', 'SELECT', 'A'].includes(t.tagName) || t.isContentEditable) return;
+      e.preventDefault(); a.toggle();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [a]);
   const [copied, setCopied] = useState<'install' | 'link' | null>(null);
   const flash = (what: 'install' | 'link') => { setCopied(what); setTimeout(() => setCopied(null), 1200); };
   const share = () => { navigator.clipboard?.writeText(window.location.href); flash('link'); };
@@ -98,9 +109,9 @@ export default function Mixer({ base }: { base: string }) {
         <button className={`big ${a.playing ? 'off' : ''}`} onClick={() => a.toggle()}>{a.playing ? '■ Pause' : '▶ Play'}</button>
         <div className="dock-now">
           <strong>{scene}</strong>
-          <span>{layers.length} {layers.length === 1 ? 'layer' : 'layers'}{a.unlocked ? '' : ' · click play to unlock audio'}</span>
+          <span><b className="num">{layers.length}</b> {layers.length === 1 ? 'layer' : 'layers'}{a.unlocked ? '' : ' · tap play to unlock audio'}</span>
         </div>
-        <label className="dock-master"><span>Master</span><input type="range" aria-label="Master volume" min={0} max={1} step={0.01} value={a.masterVolume} onChange={(e) => a.setMasterVolume(e.target.valueAsNumber)} /></label>
+        <label className="dock-master"><span>Master</span><input type="range" aria-label="Master volume" min={0} max={1} step={0.01} value={a.masterVolume} onChange={(e) => a.setMasterVolume(e.target.valueAsNumber)} /><b className="num">{Math.round(a.masterVolume * 100)}</b></label>
         <button className="ghost" onClick={share} title="Copy a link to this mix">{copied === 'link' ? 'Link copied' : 'Share mix'}</button>
       </section>
 
@@ -111,15 +122,15 @@ export default function Mixer({ base }: { base: string }) {
             <header>
               <div>
                 <h3>{BY_ID[l.id]?.name ?? l.id}</h3>
-                <span className={`tag ${BY_ID[l.id]?.kind ?? ''}`}>{BY_ID[l.id] ? KIND_LABEL[BY_ID[l.id].kind] : ''}</span>
+                <span className={`kind ${BY_ID[l.id]?.kind ?? ''}`}>{BY_ID[l.id] ? KIND_LABEL[BY_ID[l.id].kind] : ''}</span>
               </div>
               <div className="layer-actions">
                 <button className={`toggle ${layerOn(l.id) ? 'on' : ''}`} aria-label={`Toggle ${l.id}`} onClick={() => a.toggle(l.id)} />
-                <button className="remove" aria-label={`Remove ${BY_ID[l.id]?.name ?? l.id}`} title="Remove from the mix" onClick={() => { setScene('Custom'); setLayers((p) => p.filter((x) => x.id !== l.id)); }}>×</button>
+                <button className="remove" aria-label={`Remove ${BY_ID[l.id]?.name ?? l.id}`} title="Remove from the mix" onClick={() => { setScene('Custom'); setLayers((p) => p.filter((x) => x.id !== l.id)); }}><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg></button>
               </div>
             </header>
-            <label className="slider"><span>Volume</span><input type="range" aria-label={`${BY_ID[l.id]?.name ?? l.id} volume`} min={0} max={1} step={0.01} value={volumeOf(l.id)} onChange={(e) => a.setVolume(l.id, e.target.valueAsNumber)} /></label>
-            <label className="slider"><span>Room</span><input type="range" aria-label={`${BY_ID[l.id]?.name ?? l.id} reverb`} min={0} max={1} step={0.01} value={reverbOf(l.id)} onChange={(e) => a.setReverb(l.id, e.target.valueAsNumber)} /></label>
+            <label className="slider"><span>Volume</span><input type="range" aria-label={`${BY_ID[l.id]?.name ?? l.id} volume`} min={0} max={1} step={0.01} value={volumeOf(l.id)} onChange={(e) => a.setVolume(l.id, e.target.valueAsNumber)} /><b className="num">{Math.round(volumeOf(l.id) * 100)}</b></label>
+            <label className="slider"><span>Room</span><input type="range" aria-label={`${BY_ID[l.id]?.name ?? l.id} reverb`} min={0} max={1} step={0.01} value={reverbOf(l.id)} onChange={(e) => a.setReverb(l.id, e.target.valueAsNumber)} /><b className="num">{Math.round(reverbOf(l.id) * 100)}</b></label>
             <div className="meter"><i style={{ width: `${(layerOn(l.id) ? volumeOf(l.id) : 0) * 100}%` }} /></div>
           </div>
         ))}
@@ -129,7 +140,7 @@ export default function Mixer({ base }: { base: string }) {
       <Visualizer engine={a.engine} active={a.playing} />
 
       <section className="scenes-wrap" aria-label="Scenes">
-        <div className="section-head"><h2>{SCENE_COUNT} scenes</h2><p>Each one is a few layers with volumes. Pick one, then bend it with any sound below.</p></div>
+        <div className="section-head"><h2><b className="num">{SCENE_COUNT}</b> scenes</h2><p>Each one is a few layers with volumes. Pick one, then bend it with any sound below.</p></div>
         {SCENES.map((g) => (
           <div key={g.group} className="scene-group">
             <span className="scene-group-name">{g.group}</span>
@@ -144,7 +155,7 @@ export default function Mixer({ base }: { base: string }) {
 
       <section className="catalog">
         <div className="section-head">
-          <h2>All {CATALOG.length} sounds</h2>
+          <h2>All <b className="num">{CATALOG.length}</b> sounds</h2>
           <p>Tap one to add it to the mix, tap again to take it out. The code at the bottom updates as you go.</p>
         </div>
         <div className="catalog-tools">
