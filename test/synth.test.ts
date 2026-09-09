@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { fillNoise, createSynth } from '../src/synth';
+import { SYNTH_PRESETS } from '../src/types';
 import { MockAudioContext } from './setup';
 
 describe('noise', () => {
@@ -21,13 +22,20 @@ describe('noise', () => {
 });
 
 describe('createSynth', () => {
-  for (const preset of ['white', 'pink', 'brown', 'rain', 'wind', 'fire', 'hum'] as const) {
-    it(`builds and starts "${preset}" without touching the network`, () => {
+  for (const preset of SYNTH_PRESETS) {
+    it(`builds, starts and stops "${preset}" without touching the network`, async () => {
       const ctx = new MockAudioContext() as unknown as AudioContext;
       const voice = createSynth(ctx, preset);
       expect(voice.output).toBeTruthy();
       voice.start();
+      await new Promise((r) => setTimeout(r, 30));
       voice.stop();
+      const before = (ctx as unknown as MockAudioContext).created.sources.length;
+      await new Promise((r) => setTimeout(r, 60));
+      expect((ctx as unknown as MockAudioContext).created.sources.length).toBe(before);
     });
   }
+  it('lists twenty-one presets with no duplicates', () => {
+    expect(new Set(SYNTH_PRESETS).size).toBe(21);
+  });
 });

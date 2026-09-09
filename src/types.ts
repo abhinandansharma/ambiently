@@ -1,5 +1,15 @@
 /** Built-in procedurally generated ambiences. No audio files needed. */
-export type SynthPreset = 'white' | 'pink' | 'brown' | 'rain' | 'wind' | 'fire' | 'hum';
+export type SynthPreset =
+  | 'white' | 'pink' | 'brown'
+  | 'rain' | 'wind' | 'fire' | 'hum'
+  | 'ocean' | 'stream' | 'thunder' | 'crickets' | 'birds' | 'frogs'
+  | 'drone' | 'space' | 'vinyl' | 'fan' | 'heartbeat' | 'clock' | 'city' | 'snow';
+
+/** Every synth preset, in catalogue order. */
+export const SYNTH_PRESETS: SynthPreset[] = [
+  'rain', 'wind', 'fire', 'ocean', 'stream', 'thunder', 'crickets', 'birds', 'frogs', 'snow',
+  'city', 'fan', 'clock', 'vinyl', 'heartbeat', 'hum', 'drone', 'space', 'white', 'pink', 'brown',
+];
 
 export interface LayerConfig {
   /** Unique id, used to address the layer later. */

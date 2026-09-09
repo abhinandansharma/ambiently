@@ -18,10 +18,10 @@ export default function Page() {
         <section className="features">
           <div><h3>Layers, not a tag</h3><p>Each sound has its own gain. Stack rain under a beat under a fireplace and mix live.</p></div>
           <div><h3>Nothing clicks</h3><p>Play, pause, volume and scene changes are gain ramps on the audio clock.</p></div>
-          <div><h3>Synth ambiences</h3><p>Rain, wind, fire, hum and three colours of noise are generated in the browser. No files.</p></div>
+          <div><h3>Synth ambiences</h3><p>Twenty-one ambiences are generated in the browser: rain, surf, a stream, thunder, crickets, birds, a clock, vinyl, a heartbeat and more. No files.</p></div>
           <div><h3>Autoplay handled</h3><p>The context wakes on the first gesture and starts whatever you asked for.</p></div>
           <div><h3>React ready</h3><p><code>useAmbiently()</code> keeps your layers in sync and re-renders on every change.</p></div>
-          <div><h3>Tiny</h3><p>About 5 kB gzipped, zero dependencies, ESM and CJS, typed.</p></div>
+          <div><h3>Tiny</h3><p>About 9 kB gzipped, zero dependencies, ESM and CJS, typed.</p></div>
         </section>
         <section className="credits">
           <h2>Sample recordings</h2>

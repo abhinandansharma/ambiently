@@ -7,7 +7,7 @@ ambiences, fade everything with gain ramps so nothing clicks, crossfade between
 scenes, and stop fighting autoplay policies. Zero dependencies. Works anywhere the
 Web Audio API does, with first-class React and Next.js bindings.
 
-**Demo:** https://abhinandansharma.github.io/ambiently/ — eight scenes, fourteen sounds, and an "All sounds" catalogue where you can add any layer to the mix and read off the code that reproduces it.
+**Demo:** https://abhinandansharma.github.io/ambiently/ — 25 scenes and 47 sounds (24 field recordings, 2 music loops, 21 synths), with an "All sounds" catalogue where you can add any layer to the mix and read off the code that reproduces it.
 
 ![Ambiently demo](screenshots/demo.png)
 
@@ -24,8 +24,9 @@ small mixer instead:
 - **Layers.** Rain under a lo-fi track under a fireplace, each with its own volume.
 - **Seamless loops.** Decoded buffers on `AudioBufferSourceNode`, so loops are gapless.
 - **Fades everywhere.** Play, pause, volume changes and crossfades are all gain ramps.
-- **Synthesised ambiences.** `rain`, `wind`, `fire`, `hum`, and `white`, `pink`, `brown`
-  noise are generated procedurally. No audio files to host or license.
+- **Synthesised ambiences.** Twenty-one of them, from `rain`, `wind`, `fire` and `ocean` to
+  `crickets`, `birds`, `clock`, `vinyl` and `heartbeat`, all generated procedurally. No audio
+  files to host or license.
 - **Autoplay handled.** The context is created lazily and resumed on the first user
   gesture. Anything you asked to play starts the moment the browser allows it.
 - **SSR safe.** Nothing touches `window` until you play.
@@ -131,7 +132,7 @@ safe to render on the server.
 interface LayerConfig {
   id: string;            // required, unique
   src?: string;          // audio file URL
-  synth?: 'rain' | 'wind' | 'fire' | 'hum' | 'white' | 'pink' | 'brown';
+  synth?: SynthPreset;   // one of the twenty-one presets below
   volume?: number;       // 0 to 1, default 0.5
   loop?: boolean;        // default true (files only; synths always loop)
   fadeMs?: number;       // per-layer fade override
@@ -161,13 +162,30 @@ interface LayerConfig {
 
 ### Synth presets
 
-Built from three cached noise buffers plus filters and LFOs:
+Twenty-one, built from three cached noise buffers plus oscillators, filters, LFOs and a
+few scheduled events. `SYNTH_PRESETS` exports the list.
 
-- `rain`: pink noise through a high-pass with a slow swell, plus a band-passed sheen
-- `wind`: brown noise through a band-pass whose centre wanders, with gusts
-- `fire`: low-passed brown rumble plus randomly gated crackles
-- `hum`: a 50 Hz tone with harmonics, gently wobbling
-- `white`, `pink`, `brown`: the noise itself
+| Preset | What it is |
+| --- | --- |
+| `rain` | Pink noise through a high-pass with a slow swell, plus a band-passed sheen |
+| `wind` | Brown noise through a band-pass whose centre wanders, with gusts |
+| `fire` | Low-passed brown rumble plus randomly gated crackles |
+| `ocean` | Low-passed swells that breathe, with foam cresting on top |
+| `stream` | A fluttering band-pass babble, sparkle above, body below |
+| `thunder` | A constant far rumble, with rolls every five to twenty seconds |
+| `crickets` | Two high sines pulsed at about 40 Hz, chirping at their own tempo |
+| `birds` | Sine-sweep phrases of one to four notes, from birds near and far |
+| `frogs` | Pulsed square-wave croaks from a couple of frogs |
+| `snow` | A blizzard: harder gusts with more top end and a whistle |
+| `city` | A traffic rumble bed with cars passing and sweeping up in pitch |
+| `fan` | Motor hum with harmonics and air chopped by the blades |
+| `clock` | A filtered click every second, alternating tick and tock |
+| `vinyl` | Surface hiss, sparse crackles and a 33 rpm wow |
+| `heartbeat` | Lub-dub at sixty a minute, a low sine dropping in pitch |
+| `hum` | A 50 Hz tone with harmonics, gently wobbling |
+| `drone` | Detuned saws an octave apart under a breathing low-pass, with a sub |
+| `space` | Hull rumble, a tone that drifts over minutes, a faint whistle above |
+| `white`, `pink`, `brown` | The noise itself |
 
 They cost nothing to ship and loop forever without seams.
 
@@ -184,9 +202,11 @@ The demo in `demo/` imports the library from `src/` directly, so changes show up
 without a build. It is exported statically and published to GitHub Pages by the
 workflow in `.github/workflows/`.
 
-The demo's field recordings (rain, fireplace, ocean, forest, café, thunder, wind,
-crickets) are CC0 recordings from Freesound found through Openverse, cut to 30 second
-seamless loops and encoded as AAC. Sources are listed in `demo/public/sounds/CREDITS.json`
+The demo's twenty-four field recordings (rain, heavy rain, thunder, wind, ocean, a harbour,
+the deep sea, a stream, a waterfall, forest, rainforest, meadow, crickets, frogs, fireplace,
+café, market, keyboard, air conditioner, a purring cat, wind chimes, city, train, airplane)
+are CC0 recordings from Freesound found through Openverse, cut to 30 second seamless
+loops and encoded as AAC. Sources are listed in `demo/public/sounds/CREDITS.json`
 and on the demo page. The library itself ships no audio.
 
 ## License

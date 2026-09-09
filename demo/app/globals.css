@@ -42,7 +42,14 @@ code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-si
 .row label { color: var(--fg-3); font-size: 0.8rem; min-width: 4.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .hint { color: var(--fg-3); font-size: 0.85rem; }
 
-.scenes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 2rem 0 1rem; }
+.scenes-wrap { margin: 2.5rem 0 1.5rem; display: grid; gap: 0.9rem; }
+.scenes-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+.scenes-head h2 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 1.9rem); letter-spacing: -0.03em; }
+.scenes-head p { margin: 0; color: var(--fg-2); max-width: 34rem; }
+.scene-group { display: grid; grid-template-columns: 7rem 1fr; gap: 0.5rem 1rem; align-items: start; }
+.scene-group-name { color: var(--fg-3); font-size: 0.8rem; padding-top: 0.7rem; }
+.scenes { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+@media (max-width: 560px) { .scene-group { grid-template-columns: 1fr; gap: 0.3rem; } .scene-group-name { padding-top: 0.4rem; } }
 .scene { padding: 0.55rem 0.95rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg-2); font-size: 0.9rem; transition: all 0.2s; }
 .scene:hover { border-color: var(--fg); color: var(--fg); }
 .scene.on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
