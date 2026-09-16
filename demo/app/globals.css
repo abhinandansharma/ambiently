@@ -141,17 +141,16 @@ h3.tag { font-size: 0.78rem; margin: 0 0 0.8rem; }
 .features h3 { margin: 0 0 0.35rem; font-size: 1rem; }
 .features p { margin: 0; color: var(--fg-2); font-size: 0.95rem; }
 
-footer.wrap { border-top: 1px solid var(--line); padding-top: 2rem; padding-bottom: 3rem; margin-top: 1rem; color: var(--fg-3); font-size: 0.9rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-footer a { color: var(--fg-2); }
+footer.wrap { border-top: 1px solid var(--line); padding-top: 2rem; padding-bottom: 3rem; margin-top: 1rem; color: var(--fg-3); font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+footer a:not(.made-by) { color: var(--fg-2); }
 
 
-/* made-by badge (identical across every project; keep in sync) */
-.made-by { position: fixed; left: 18px; bottom: 18px; z-index: 950; display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 999px; background: #0b0b0b; color: #f1ede4; border: 1px solid #262626; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 400; line-height: 1; letter-spacing: 0; text-decoration: none; transition: background-color 0.2s, opacity 0.3s; }
+/* made-by badge (identical across every project; keep in sync). It lives in the page footer, never fixed, so it covers nothing. */
+.made-by { display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 999px; background: #0b0b0b; color: #f1ede4; border: 1px solid #262626; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 400; line-height: 1; letter-spacing: 0; text-decoration: none; white-space: nowrap; flex: 0 0 auto; transition: background-color 0.2s, opacity 0.3s; }
 .made-by b { font-weight: 600; color: inherit; }
 .made-by-mark { display: block; border-radius: 6px; transition: transform 0.25s cubic-bezier(0.19, 1, 0.22, 1); }
 .made-by:hover { background: #1c1c1c; color: #f1ede4; }
 .made-by:hover .made-by-mark { transform: rotate(-8deg) scale(1.08); }
-@media (max-width: 560px) { .made-by { left: 12px; bottom: 12px; } }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .hint { color: var(--fg-2); }
